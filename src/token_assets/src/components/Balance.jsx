@@ -7,6 +7,7 @@ function Balance() {
   const [inputValue, setInput] = useState("")
   const [balanceResult, setBalance] = useState("")
   const [tokenName, setTokenName] = useState("")
+  const [isHidden, setHidden] = useState(true)
   
   //example principal id 4snti-x4tyi-qz52y-4acvm-qimyd-ii6j4-ys3gt-qa267-sgzms-hd6l5-pae
 
@@ -23,6 +24,8 @@ function Balance() {
     //we have to convert it to the string with toLocaleString method
     setBalance(balance.toLocaleString())
     setTokenName(symbol)
+    //handle Hidden attribute to display <p>
+    setHidden(false)
   }
 
 
@@ -47,7 +50,7 @@ function Balance() {
           Check Balance
         </button>
       </p>
-      <p>This account has a balance of {balanceResult} {tokenName}.</p>
+      <p hidden={isHidden}>This account has a balance of {balanceResult} {tokenName}.</p>
     </div>
   );
 }
