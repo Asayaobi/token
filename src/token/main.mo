@@ -1,4 +1,6 @@
 import Principal "mo:base/Principal";
+import HashMap "mo:base/HashMap";
+
 actor Token {
     //get the principal fr0m dfx identity get-principal
     //convert the text into Principal
@@ -7,4 +9,10 @@ actor Token {
     var totalSupply : Nat = 1000000000;
     //create token symbol
     var symbol : Text = "MOODENG";
+
+    //create a ledger
+    //class HashMap<K, V>(initCapacity : Nat, keyEq : (K, K) -> Bool, keyHash : K -> Hash.Hash)
+    var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
+    //add the owner to this ledger as the first entry
+    balances.put(owner, totalSupply);    
 }
