@@ -6,18 +6,23 @@ function Balance() {
 
   const [inputValue, setInput] = useState("")
   const [balanceResult, setBalance] = useState("")
+  const [tokenName, setTokenName] = useState("")
   
+  //example principal id 4snti-x4tyi-qz52y-4acvm-qimyd-ii6j4-ys3gt-qa267-sgzms-hd6l5-pae
+
   async function handleClick() {
     // console.log(inputValue);
     //1. call balanceOf() from backend token canister
     //convert inputValue as Principal type in order to use with balanceOf()
     const principal = Principal.fromText(inputValue)
     const balance = await token.balanceOf(principal)
+    const symbol = await token.getSymbol()
 
     //2. display the result as balanceResult
     //the balance from backend is passed as Natural number format eg. 1_000_000_000
     //we have to convert it to the string with toLocaleString method
     setBalance(balance.toLocaleString())
+    setTokenName(symbol)
   }
 
 
@@ -42,7 +47,7 @@ function Balance() {
           Check Balance
         </button>
       </p>
-      <p>This account has a balance of {balanceResult}.</p>
+      <p>This account has a balance of {balanceResult} {tokenName}.</p>
     </div>
   );
 }
