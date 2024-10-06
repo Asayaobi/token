@@ -14,5 +14,20 @@ actor Token {
     //class HashMap<K, V>(initCapacity : Nat, keyEq : (K, K) -> Bool, keyHash : K -> Hash.Hash)
     var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
     //add the owner to this ledger as the first entry
-    balances.put(owner, totalSupply);    
+    balances.put(owner, totalSupply);
+
+    //make a query to find out how much balance is a particular person (id) own
+    public query func balanceOf(who: Principal) : async Nat {
+        //func get(key : K) : (value : ?V) 
+        // if (balances.get(who) == null){
+        //     return 0;
+        // } else {
+        //     return balances.get(who)
+        // }
+        let balance : Nat = switch (balances.get(who)){
+            case null 0;
+            case (?result) result;
+        };
+        return balance;
+    }
 }
