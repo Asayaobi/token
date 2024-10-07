@@ -45,8 +45,8 @@ actor Token {
         if (balances.get(msg.caller) == null) {
         //2. give 10,000 MooDeng tokens to that user
             let amount =  10000;
-            balances.put(msg.caller, amount);
-            return "Success";
+            let result = await transfer(msg.caller, amount);
+            return result;
         // 3. if its the same user
         } else {
             return "Already Claimed";
