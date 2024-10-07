@@ -4,14 +4,15 @@ import { token } from "../../../declarations/token"
 function Faucet() {
 
   const [isDisable, setDisable] = useState(false)
+  const [buttonText, setButtonText] = useState("Gimme Gimme")
 
   async function handleClick(event) {
     //when the user call the function, set the button disable
     setDisable(true)
-    await token.payOut()
-    //once the function is completed, set it back to false
+    let result = await token.payOut()
+    //once the function is completed, set the button text to Already Claimed
+    setButtonText(result)
     // setDisable(false)
-    //but in this case, let's prevent it so that the same user can't ask for the tokens again
   }
 
   return (
@@ -24,8 +25,8 @@ function Faucet() {
       </h2>
       <label>Get your free MooDeng tokens here! Claim 10,000 DENG tokens to your account.</label>
       <p className="trade-buttons">
-        <button id="btn-payout" disable={isDisable} onClick={handleClick}>
-          Gimme gimme
+        <button id="btn-payout" disabled={isDisable} onClick={handleClick}>
+          {buttonText}
         </button>
       </p>
     </div>
