@@ -6,13 +6,22 @@ function Transfer() {
 
   const [recipientId, setId] = useState("")
   const [amountText, setAmountText] = useState("")
+
+  //for button
+  const [isDisabled, setDisabled] = useState(false)
+
   
   async function handleClick() {
+    //disable the button when the function is running
+    setDisabled(true)
     //convert recipientId to Principal Type
     const recipient = Principal.fromText(recipientId)
     //convert amountText to Nat Type
     const amount = Number(amountText)
-    await token.transfer(recipient, amount)
+    const result = await token.transfer(recipient, amount)
+
+    //when the function is done reset the buton
+    setDisabled(false)
   }
 
   return (
@@ -45,7 +54,7 @@ function Transfer() {
           </ul>
         </fieldset>
         <p className="trade-buttons">
-          <button id="btn-transfer" onClick={handleClick} >
+          <button id="btn-transfer" disabled={isDisabled} onClick={handleClick} >
             Transfer
           </button>
         </p>
