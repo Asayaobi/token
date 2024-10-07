@@ -41,9 +41,15 @@ actor Token {
         //log to see the principal id of the caller
         Debug.print(debug_show (msg.caller));
 
-        //give 10,000 MooDeng tokens to that user
-        let amount =  10000;
-        balances.put(msg.caller, amount);
-        return "success";
+        //1. check if this person has already claimed the tokens with get method (if principal doesn't exist, return null)
+        if (balances.get(msg.caller) == null) {
+        //2. give 10,000 MooDeng tokens to that user
+            let amount =  10000;
+            balances.put(msg.caller, amount);
+            return "Success";
+        // 3. if its the same user
+        } else {
+            return "Already Claimed";
+        }
     };
 }
