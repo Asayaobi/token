@@ -1,6 +1,7 @@
 import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
+import Iter "mo:base/Iter";
 
 actor Token {
     //get the principal fr0m dfx identity get-principal
@@ -73,5 +74,11 @@ actor Token {
         } else {
             return "Insufficient fund"
         }
-    }
-}
+    };
+
+    system func preupgrade() {
+        //turn balance into an array using Iter method 
+        //since balance isn't an array, use entries method returns something that can be iterated over
+        balanceEntries := Iter.toArray(balances.entries());
+    };
+
