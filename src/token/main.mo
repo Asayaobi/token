@@ -36,11 +36,14 @@ actor Token {
         return symbol;
     };
 
-    //for testing purpose
     //shared(msg) func inc() : async() {//msg.caller} - identify the principal id of a person who call this function 
     public shared(msg) func payOut() : async Text {
         //log to see the principal id of the caller
         Debug.print(debug_show (msg.caller));
+
+        //give 10,000 MooDeng tokens to that user
+        let amount =  10000;
+        balances.put(msg.caller, amount);
         return "success";
     };
 }

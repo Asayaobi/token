@@ -15,7 +15,7 @@ function Faucet() {
         </span>
         Faucet
       </h2>
-      <label>Get your free MooDeng tokens here! Claim 10,000 DENG coins to your account.</label>
+      <label>Get your free MooDeng tokens here! Claim 10,000 DENG tokens to your account.</label>
       <p className="trade-buttons">
         <button id="btn-payout" onClick={handleClick}>
           Gimme gimme
