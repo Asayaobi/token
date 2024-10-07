@@ -10,16 +10,25 @@ function Transfer() {
   //for button
   const [isDisabled, setDisabled] = useState(false)
 
+  //for feedback paragraph
+  const [feedback, setFeedback] = useState("")
+  const [isHidden, setHidden] = useState(true)
   
   async function handleClick() {
     //disable the button when the function is running
     setDisabled(true)
+    //don't display any feedback before the function finish running
+    setHidden(true)
+
     //convert recipientId to Principal Type
     const recipient = Principal.fromText(recipientId)
     //convert amountText to Nat Type
     const amount = Number(amountText)
     const result = await token.transfer(recipient, amount)
 
+    //add and display feedback message
+    setFeedback(result)
+    setHidden(false)
     //when the function is done reset the buton
     setDisabled(false)
   }
@@ -58,6 +67,7 @@ function Transfer() {
             Transfer
           </button>
         </p>
+        <p hidden={isHidden}>{feedback}</p>
       </div>
     </div>
   );
