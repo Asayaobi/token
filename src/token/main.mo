@@ -5,17 +5,15 @@ import Debug "mo:base/Debug";
 actor Token {
     //get the principal fr0m dfx identity get-principal
     //convert the text into Principal
-    var owner : Principal = Principal.fromText("4snti-x4tyi-qz52y-4acvm-qimyd-ii6j4-ys3gt-qa267-sgzms-hd6l5-pae");
+    let owner : Principal = Principal.fromText("4snti-x4tyi-qz52y-4acvm-qimyd-ii6j4-ys3gt-qa267-sgzms-hd6l5-pae");
     //create total supply of one billion
-    var totalSupply : Nat = 1000000000;
+    let totalSupply : Nat = 1000000000;
     //create token symbol
-    var symbol : Text = "DENG";
+    let symbol : Text = "DENG";
 
-    //create a ledger
-    //class HashMap<K, V>(initCapacity : Nat, keyEq : (K, K) -> Bool, keyHash : K -> Hash.Hash)
-    var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
-    //add the owner to this ledger as the first entry
-    balances.put(owner, totalSupply);
+    // a ledger
+    private stable var balanceEntries: [(Principal, Nat)] = [];
+    private var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
 
     //make a query to find out how much balance is a particular person (id) own
         //func get(key : K) : (value : ?V) 
