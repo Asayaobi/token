@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react"
+import { Principal } from "@dfinity/principal"
+import {token} from "../../../declarations/token"
 
 function Transfer() {
+
+  const [recipientId, setId] = useState("")
+  const [amountText, setAmountText] = useState("")
   
   async function handleClick() {
-    
+    //convert recipientId to Principal Type
+    const recipient = Principal.fromText(recipientId)
+    //convert amountText to Nat Type
+    const amount = Number(amountText)
+    await token.transfer(recipient, amount)
   }
 
   return (
@@ -16,6 +25,8 @@ function Transfer() {
               <input
                 type="text"
                 id="transfer-to-id"
+                value={recipientId}
+                onChange={(e)=> setId(e.target.value)}
               />
             </li>
           </ul>
@@ -27,6 +38,8 @@ function Transfer() {
               <input
                 type="number"
                 id="amount"
+                value={amountText}
+                onChange={(e) => setAmountText(e.target.value)}
               />
             </li>
           </ul>
