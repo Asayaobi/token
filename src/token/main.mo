@@ -18,13 +18,13 @@ actor Token {
     balances.put(owner, totalSupply);
 
     //make a query to find out how much balance is a particular person (id) own
-    public query func balanceOf(who: Principal) : async Nat {
         //func get(key : K) : (value : ?V) 
         // if (balances.get(who) == null){
         //     return 0;
         // } else {
         //     return balances.get(who)
         // }
+    public query func balanceOf(who: Principal) : async Nat {
         let balance : Nat = switch (balances.get(who)){
             case null 0;
             case (?result) result;
@@ -52,4 +52,28 @@ actor Token {
             return "Already Claimed";
         }
     };
+    
+    //only pass "to" account and the "amount"
+    //whoever trigger this function is the "from" (msg.caller)
+    public shared(msg) func transfer(to: Principal, amount: Nat) : async Text {
+        //1. check the balance of that person
+        let fromBalance = await balanceOf(msg.caller);
+        //2. if there's enough money to transfer from the account
+        if (fromBalance > amount) {
+            //3. remove the transfer amount of out Account A
+            let newFromBalace : Nat = fromBalance - amount;
+            //4. update Account A balance
+            balances.put(msg.caller, newFromBalace);
+
+            //add that transfer amount to Account B process
+            //5. check the balance of Account B from what user paste in the input
+            let toBalance = await balanceOf(to);
+            //6. add that transfer amount to Account B 
+            let newToBalance = toBalance + amount;
+            balances.put(to, newToBalance);
+            return "Success"
+        } else {
+            return "Insufficient fund"
+        }
+    }
 }
