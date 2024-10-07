@@ -82,3 +82,13 @@ actor Token {
         balanceEntries := Iter.toArray(balances.entries());
     };
 
+    system func postupgrade() {
+        //vals method to get back a way to iter all of the data type in balanceEntries
+        balances := HashMap.fromIter<Principal, Nat>(balanceEntries.vals(), 1, Principal.equal, Principal.hash);
+        //if the balance is empty, put the total supply in
+        if (balances.size() > 1) {
+            //add the owner to this ledger as the first entry
+             balances.put(owner, totalSupply);
+        }
+    };
+};
