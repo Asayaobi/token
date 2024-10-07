@@ -15,6 +15,10 @@ actor Token {
     // a ledger
     private stable var balanceEntries: [(Principal, Nat)] = [];
     private var balances = HashMap.HashMap<Principal, Nat>(1, Principal.equal, Principal.hash);
+    if (balances.size() < 1) {
+            //add the owner to this ledger as the first entry
+            balances.put(owner, totalSupply);
+        };
 
     //make a query to find out how much balance is a particular person (id) own
         //func get(key : K) : (value : ?V) 
@@ -60,9 +64,9 @@ actor Token {
         //2. if there's enough money to transfer from the account
         if (fromBalance > amount) {
             //3. remove the transfer amount of out Account A
-            let newFromBalace : Nat = fromBalance - amount;
+            let newFromBalance : Nat = fromBalance - amount;
             //4. update Account A balance
-            balances.put(msg.caller, newFromBalace);
+            balances.put(msg.caller, newFromBalance);
 
             //add that transfer amount to Account B process
             //5. check the balance of Account B from what user paste in the input
@@ -86,9 +90,9 @@ actor Token {
         //vals method to get back a way to iter all of the data type in balanceEntries
         balances := HashMap.fromIter<Principal, Nat>(balanceEntries.vals(), 1, Principal.equal, Principal.hash);
         //if the balance is empty, put the total supply in
-        if (balances.size() > 1) {
+        if (balances.size() < 1) {
             //add the owner to this ledger as the first entry
-             balances.put(owner, totalSupply);
-        }
+            balances.put(owner, totalSupply);
+        };
     };
 };
