@@ -1,5 +1,6 @@
 import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
+import Debug "mo:base/Debug";
 
 actor Token {
     //get the principal fr0m dfx identity get-principal
@@ -33,5 +34,13 @@ actor Token {
     
     public query func getSymbol() : async Text {
         return symbol;
+    };
+
+    //for testing purpose
+    //shared(msg) func inc() : async() {//msg.caller} - identify the principal id of a person who call this function 
+    public shared(msg) func payOut() : async Text {
+        //log to see the principal id of the caller
+        Debug.print(debug_show (msg.caller));
+        return "success";
     };
 }
