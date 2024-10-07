@@ -9,7 +9,7 @@ actor Token {
     //create total supply of one billion
     var totalSupply : Nat = 1000000000;
     //create token symbol
-    var symbol : Text = "MOODENG";
+    var symbol : Text = "DENG";
 
     //create a ledger
     //class HashMap<K, V>(initCapacity : Nat, keyEq : (K, K) -> Bool, keyHash : K -> Hash.Hash)
