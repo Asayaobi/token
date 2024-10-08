@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { token, canisterId, createActor } from "../../../declarations/token"
+import { canisterId, createActor } from "../../../declarations/token"
 import { AuthClient } from "../../../../node_modules/@dfinity/auth-client/lib/cjs/index";
 
 function Faucet(props) {
