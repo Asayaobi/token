@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { token, canisterId, createActor } from "../../../declarations/token"
 import { AuthClient } from "../../../../node_modules/@dfinity/auth-client/lib/cjs/index";
 
-function Faucet() {
+function Faucet(props) {
 
   const [isDisable, setDisable] = useState(false)
   const [buttonText, setButtonText] = useState("Gimme Gimme")
@@ -33,7 +33,7 @@ function Faucet() {
         </span>
         Faucet
       </h2>
-      <label>Get your free MooDeng tokens here! Claim 10,000 DENG tokens to your account.</label>
+      <label>Get your free MooDeng tokens here! Claim 10,000 DENG tokens to {props.userPrincipal}.</label>
       <p className="trade-buttons">
         <button id="btn-payout" disabled={isDisable} onClick={handleClick}>
           {buttonText}
