@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { token } from "../../../declarations/token"
+import { token, canisterId, createActor } from "../../../declarations/token"
+import { AuthClient } from "../../../../node_modules/@dfinity/auth-client/lib/cjs/index";
 
 function Faucet() {
 
@@ -9,7 +10,16 @@ function Faucet() {
   async function handleClick(event) {
     //when the user call the function, set the button disable
     setDisable(true)
-    let result = await token.payOut()
+
+    const authClient = await AuthClient.create()
+    const identity = await authClient.getIdentity()
+
+    const authenticatedCanister = createActor(canisterId, {
+      agentOptions: {
+        identity,
+      },
+    })
+    let result = await authenticatedCanister.payOut()
     //once the function is completed, set the button text to Already Claimed
     setButtonText(result)
     // setDisable(false)
